@@ -1,0 +1,39 @@
+#!/bin/bash
+
+help() {
+  echo "Usage:"
+  echo "  zrsvm install [version]"
+  echo ""
+  echo "Options:"
+  echo "  version    - Install Rust version, default: $PLUGIN_RSVM_RUST_DEFAULT_VERSION"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  local version=$1
+  if [ -z "$version" ]; then
+    version=$PLUGIN_RSVM_RUST_DEFAULT_VERSION
+  fi
+
+  log::info "installing $version"
+  rsvm::install $version
+  log::success "install ${version} success"
+
+  if [ -z "$HOME/.zshrc" ]; then
+    log::success "load rust and cargo by reloading env with `$(color::success "source $HOME/.zshrc")`"
+  elif [ -z "$HOME/.bashrc" ]; then
+    log::success "load rust and cargo by reloading env with `$(color::success "source $HOME/.bashrc")`"
+  else
+    log::success "restart your shell to load rust and cargo"
+  fi
+}
+
+run() {
+  core $@
+}
+
+run $@

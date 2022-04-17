@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# rsvm::remove remove the rust version
+# if the version is current, it will be unset
+rsvm::remove() {
+  local version=$1
+  if [ -z "$version" ]; then
+    log::error "[rsvm::use] version is required"
+    exit 1
+  fi
+
+  # smart detect
+  version=$(vm::version_ensure_prefix_v $version)
+
+  if [ ! -d "$PLUGIN_RSVM_VERSIONS/$version" ]; then
+    log::error "[rsvm::use] version $version not found"
+    exit 1
+  fi
+
+  sudo rm -rf $PLUGIN_RSVM_VERSIONS/$version
+
+  if [ "$(rsvm::current)" == "$version" ]; then
+    local new_version=$(rsvm::list | head -n 1)
+    if [ -n "$new_version" ]; then
+      rsvm::use $new_version
+    else
+      echo "" > $PLUGIN_RSVM_VERSION_CURRENT
+    fi
+  fi
+}
+
+export -f rsvm::remove

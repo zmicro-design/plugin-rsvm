@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# rsvm::use change the current version of go
+rsvm::use() {
+  local version=$1
+  if [ -z "$version" ]; then
+    log::error "[rsvm::use] version is required"
+    exit 1
+  fi
+
+  # smart detect
+  version=$(vm::version_ensure_prefix_v $version)
+
+  if [ ! -d "$PLUGIN_RSVM_VERSIONS/$version" ]; then
+    # log::error "[rsvm::use] version $version not found"
+    # exit 1
+    rsvm::install $version
+    rsvm::use $version
+    return
+  fi
+
+  # @TODO force sudo
+  sudo ls >> /dev/null 2>&1
+
+  if [ -d $PLUGIN_RSVM_RUST_HOME ]; then
+    # if not a link
+    file $PLUGIN_RSVM_RUST_HOME | grep symbolic >> /dev/null 2>&1
+    if [ "$?" != "0" ]; then
+      sudo rm -rf $PLUGIN_RSVM_RUST_HOME
+    else
+      sudo rm -f $PLUGIN_RSVM_RUST_HOME
+    fi
+  fi
+  
+  sudo ln -sf $PLUGIN_RSVM_VERSIONS/$version $PLUGIN_RSVM_RUST_HOME
+  echo $version > $PLUGIN_RSVM_VERSION_CURRENT
+
+  # apply env
+  rsvm::env
+}
+
+export -f rsvm::use

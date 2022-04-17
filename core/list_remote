@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rsvm::list_remote() {
+  local versions=$(git ls-remote -t $PLUGIN_RSVM_RUST_REPO | awk -F/ '{ print $NF }' |  awk '!/\^\{\}$/' | awk '!/release-/')
+  for version in ${versions[@]}; do
+    echo v$version
+  done
+}
+
+
+export -f rsvm::list_remote

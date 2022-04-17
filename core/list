@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rsvm::list() {
+  ls $PLUGIN_RSVM_VERSIONS
+}
+
+export -f rsvm::list

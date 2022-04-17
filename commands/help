@@ -1,0 +1,48 @@
+#!/bin/bash
+
+name() {
+  local version=$(plugin::get_version $PLUGIN_RSVM_NAME)
+  echo "Rust Version Manager ($(color::success $version))"
+}
+
+description() {
+  echo "Rust Version Manager is a tool for managing multiple Go versions."
+}
+
+usage() {
+  echo "Usage:"
+  echo "  zrsvm install <version>   - Install Rust version"
+  echo "  zrsvm use <version>       - Use Rust version"
+  echo "  zrsvm remove <version>    - Remove Rust version"
+  echo "  zrsvm ls                  - List the Go versions installed"
+  echo "  zrsvm ls-remote           - List all Go versions from remote"
+  echo "  zrsvm current             - Show current Rust version"
+  echo "  zrsvm exec                - Enter new shell with rust version for tmp"
+  echo "  zrsvm help                - Show help"
+}
+
+example() {
+  echo "Example:"
+  echo "  zrsvm install $PLUGIN_RSVM_RUST_DEFAULT_VERSION"
+  echo "  zrsvm use $PLUGIN_RSVM_RUST_DEFAULT_VERSION"
+  echo "  zrsvm remove $PLUGIN_RSVM_RUST_DEFAULT_VERSION"
+  echo "  zrsvm ls"
+  echo "  zrsvm ls-remote"
+  echo "  zrsvm current"
+}
+
+core() {
+  name
+  echo ""
+  description
+  echo ""
+  usage
+  echo ""
+  example
+}
+
+run() {
+  core $@
+}
+
+run $@

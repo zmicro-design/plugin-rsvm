@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# rsvm::current gets the current version of Go
+rsvm::current() {
+  if [ ! -f "${PLUGIN_RSVM_VERSION_CURRENT}" ]; then
+    echo ""
+    return
+  fi
+
+  echo $(cat $PLUGIN_RSVM_VERSION_CURRENT)
+}
+
+export -f rsvm::current
