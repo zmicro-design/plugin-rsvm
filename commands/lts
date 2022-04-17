@@ -1,0 +1,25 @@
+#!/bin/bash
+
+help() {
+  echo "Use LTS Version"
+  echo ""
+  echo "Usage:"
+  echo "  zrsvm lts"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  log::info "Use LTS Version $PLUGIN_RSVM_RUST_LTS_VERSION"
+
+  rsvm::use $PLUGIN_RSVM_RUST_LTS_VERSION
+}
+
+run() {
+  core $@
+}
+
+run $@
