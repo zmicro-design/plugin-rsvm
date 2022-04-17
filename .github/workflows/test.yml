@@ -64,8 +64,8 @@ jobs:
       - name: Install RSVM
         run: ./install
 
-      - name: Install Rust
-        run: zmicro rsvm install
+      - name: Install Rust (Stable/LTS)
+        run: zmicro rsvm lts
 
       - name: Show Rust Version
         run: |
