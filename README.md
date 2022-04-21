@@ -1,7 +1,7 @@
 # RSVM - Rust Version Manager Plugin for [ZMicro](https://github.com/zcorky/zmicro)
 
 [![Release](https://img.shields.io/github/tag/zmicro-design/plugin-rsvm.svg?label=Release)](https://github.com/zmicro-design/plugin-rsvm/tags)
-[![Build Status](https://github.com/zmicro-design/plugin-rsvm/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/zmicro-design/plugin-rsvm/actions/workflows/ci.yml)
+[![Build Status](https://github.com/zmicro-design/plugin-rsvm/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/zmicro-design/plugin-rsvm/actions/workflows/test.yml)
 [![GitHub issues](https://img.shields.io/github/issues/zmicro-design/plugin-rsvm.svg)](https://github.com/zmicro-design/plugin-rsvm/issues)
 
 
