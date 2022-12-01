@@ -3,7 +3,7 @@
 # rsvm::install install rust version
 rsvm::install() {
   vm::ensure
-  
+
   # 1. get version (vm::version_parse only use in install)
   local version=$(vm::version_parse $1)
   # 2. get download url
@@ -32,7 +32,7 @@ rsvm::internal_install_get_download_url() {
   # linux
   # https://static.rust-lang.org/dist/rust-1.60.0-x86_64-unknown-linux-gnu.tar.gz
   # https://static.rust-lang.org/dist/rust-1.60.0-aarch64-unknown-linux-gnu.tar.gz
-  # 
+  #
   # mac
   # https://static.rust-lang.org/dist/rust-1.60.0-x86_64-apple-darwin.tar.gz
   # https://static.rust-lang.org/dist/rust-1.60.0-aarch64-apple-darwin.tar.gz
@@ -70,7 +70,7 @@ rsvm::internal_install_download() {
   fi
 
   # 302 redirect
-  curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "302" >> /dev/null 2>&1
+  curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "302" >>/dev/null 2>&1
   if [ "$?" = "0" ]; then
     local location=$(curl -I $tar_gz_url 2>/dev/null | grep location | awk '{print $2}')
 
@@ -79,7 +79,7 @@ rsvm::internal_install_download() {
     location=$(echo $location | sed 's/\r//g')
 
     # 404
-    curl -I $location 2>/dev/null | head -n 1 | grep "404" >> /dev/null 2>&1
+    curl -I $location 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
     if [ "$?" = "0" ]; then
       log::error "[rsvm::install] invalid version: $version"
       log::error "[rsvm::install] see more version at $PLUGIN_RSVM_RUST_SOURCE_OFFICIAL"
@@ -87,7 +87,7 @@ rsvm::internal_install_download() {
     fi
   else
     # 404
-    curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "404" >> /dev/null 2>&1
+    curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
     if [ "$?" = "0" ]; then
       log::error "[rsvm::install] invalid version: $version"
       log::error "[rsvm::install] see more version at $PLUGIN_RSVM_RUST_SOURCE_OFFICIAL"
@@ -96,7 +96,8 @@ rsvm::internal_install_download() {
   fi
 
   # download
-  wget -c $tar_gz_url -O $PLUGIN_RSVM_RUST_DOWNLOAD_TMP
+  # wget -c $tar_gz_url -O $PLUGIN_RSVM_RUST_DOWNLOAD_TMP
+  os::download $PLUGIN_RSVM_RUST_DOWNLOAD_TMP $tar_gz_url
 }
 
 rsvm::internal_install_apply_local() {
