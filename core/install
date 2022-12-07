@@ -37,23 +37,22 @@ rsvm::internal_install_get_download_url() {
   # https://static.rust-lang.org/dist/rust-1.60.0-x86_64-apple-darwin.tar.gz
   # https://static.rust-lang.org/dist/rust-1.60.0-aarch64-apple-darwin.tar.gz
   #
-  local filename=rust-${version}-${arch}-${os}.tar.gz
-  local tar_gz_url=${PLUGIN_RSVM_RUST_SOURCE_OFFICIAL}/$filename
   if [ "$(net::is_google_visitable)" = "false" ]; then
-    tar_gz_url=${PLUGIN_RSVM_RUST_SOURCE_CHINA}/$filename
+    PLUGIN_RSVM_RUST_SOURCE=${PLUGIN_RSVM_RUST_SOURCE_CHINA}
   fi
 
   # force cn mirror
   if [ -n "${FORCE_CN}" ]; then
-    tar_gz_url=${PLUGIN_RSVM_RUST_SOURCE_CHINA}/$filename
+    PLUGIN_RSVM_RUST_SOURCE=${PLUGIN_RSVM_RUST_SOURCE_CHINA}
   fi
 
   # custom source
-  if [ -n "${GO_SOURCE}" ]; then
-    tar_gz_url=${GO_SOURCE}/$filename
+  if [ -n "${RUST_SOURCE}" ]; then
+    PLUGIN_RSVM_RUST_SOURCE=$RUST_SOURCE
   fi
 
-  echo $tar_gz_url
+  local filename=rust-${version}-${arch}-${os}.tar.gz
+  echo ${PLUGIN_RSVM_RUST_SOURCE}/$filename
 }
 
 rsvm::internal_install_download() {

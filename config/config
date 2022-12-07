@@ -13,8 +13,11 @@ export PLUGIN_RSVM_RUST_HOME=/usr/local/rust
 export PLUGIN_RSVM_RUST_BIN=$PLUGIN_RSVM_RUST_HOME/bin
 export PLUGIN_RSVM_RUST_PATH=$HOME/.rust
 export PLUGIN_RSVM_RUST_DOWNLOAD_TMP=/tmp/rust.tar.gz
+
 export PLUGIN_RSVM_RUST_SOURCE_OFFICIAL=https://static.rust-lang.org/dist
 export PLUGIN_RSVM_RUST_SOURCE_CHINA=https://mirrors.ustc.edu.cn/rust-static/dist
+export PLUGIN_RSVM_RUST_SOURCE=${PLUGIN_RSVM_RUST_SOURCE:-$PLUGIN_RSVM_RUST_SOURCE_OFFICIAL}
+
 export PLUGIN_RSVM_RUST_REPO=https://github.com/rust-lang/rust
 
 if [ ! -d "$PLUGIN_RSVM_VERSIONS" ]; then
